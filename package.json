@@ -1,0 +1,32 @@
+{
+  "name": "vanin",
+  "version": "0.1.0",
+  "description": "A simple Node.js form",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "crypto": "0.0.3",
+    "express": "^4.9.8",
+    "iconv": "~2.1.11",
+    "node-gyp": "^3.6.2",
+    "pg": "^4.4.6",
+    "querystring": "^0.2.0",
+    "request": "^2.72.0"
+  },
+  "engines": {
+    "node": "0.12.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/VaoTsun/tts"
+  },
+  "keywords": [
+    "node",
+    "doc",
+    "express"
+  ],
+  "license": "MIT"
+}
+
