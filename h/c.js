@@ -63,7 +63,15 @@ pavarde vardas, gimimo data, ????????? ???? ??? am?us, lytis, diagnoze, papildom
 				var k = Object.keys(e.rows);
 				var h = '<table>';
 				for (var i=0;i<e.rows.length;i++) {
-					h += '<tr title="' + e.rows[i].added+'"><td>' + e.rows[i]["id"]+'</td><td>' + e.rows[i]["name"]+'</td><td>' + e.rows[i]["dob"]+'</td><td>' + e.rows[i]["amzius"]+'</td>';
+					h += '<tr title="' + e.rows[i].added+'"><td>' + e.rows[i]["id"]+'</td><td>' 
+						+ e.rows[i]["vardas"]+'</td><td>' 
+						+ e.rows[i]["pavardė"]+'</td><td>' 
+						+ e.rows[i]["gimimo data"]+'</td><td>' 
+						+ e.rows[i]["amžius"]+'</td>'
+						+ e.rows[i]["lytis"]+'</td>'					;
+						+ e.rows[i]["diagnozė"]+'</td>'
+						+ e.rows[i]["papildoma info"]+'</td>'
+						+ e.rows[i]["prisegtukas"]+'</td>'
 					h += '</tr>';
 				}
 				h += '</table>';
