@@ -1,0 +1,22 @@
+			body {background-color:black;color:ada;}
+			tr.nth-child(odd) {color:#b3f;} 
+			tr:nth-child(even) {color: #ae2;} 
+			td.nth-child(odd)  {border-bottom: 1px #4aa solid;}  
+			td:nth-child(even) {border-bottom: 1px #50a solid;} 
+			tr:hover { color: brown;}
+			span {background-color:grey;} 
+			span:hover { color: orange;background-color:black;}
+			.stick {
+ 	  		position: fixed;
+  	  	top: 0;
+				}
+			span.tags {
+				opacity:0.9;background-color:#070700;
+				overflow: auto;
+				overflow-x: hidden;
+				height:40px;
+				width:200px;
+				float:right;
+				font-size:12px;
+			}
+			a {color:black;font-size:30px;}

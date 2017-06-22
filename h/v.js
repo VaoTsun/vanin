@@ -52,34 +52,37 @@ function IsJsonString(str) {
     return new Object({"obj":r,"string":JSON.stringify(str,null,2)});
 }
 
-function clients() {
+function clients(k) {
+  var k = k;
+  k = k || '%';
 	loadJSON(
-		"/db?q=c&pqa=%"
+		"/db?q=c&pqa="+k
 		, function (e) {
 				var k = Object.keys(e.rows);
 				var h = '<table>';
+        h += '<tr style="background-color: grey;"><td ><a href="e?id=0&rel=clients" style="background-color:white;font-size:10px;">+</a></td><td>vardas</td><td>pavardė</td><td>gimimo data</td><td>amžius</td><td>lytis</td><td>diagnozė</td><td>papildoma info</td><td>prisegtukas</td></tr>';
 				for (var i=0;i<e.rows.length;i++) {
 					h += '<tr title="' 
-            + e.rows[i].added+'"><td>' 
-            + e.rows[i]["id"]+'</td><td>' 
+            + e.rows[i].added+'" onclick="visits('+e.rows[i]["id"]+');"><td><a href="e?id='+e.rows[i]["id"]+'&rel=clients" style="background-color:white;font-size:12px;">' 
+            + e.rows[i]["id"]+'</a></td><td>' 
 						+ e.rows[i]["vardas"]+'</td><td>' 
 						+ e.rows[i]["pavardė"]+'</td><td>' 
 						+ e.rows[i]["gimimo data"]+'</td><td>' 
-						+ e.rows[i]["amžius"]+'</td>'
-						+ e.rows[i]["lytis"]+'</td>'					
-						+ e.rows[i]["diagnozė"]+'</td>'
-						+ e.rows[i]["papildoma info"]+'</td>'
+						+ e.rows[i]["amžius"]+'</td><td>'
+						+ e.rows[i]["lytis"]+'</td><td>'					
+						+ e.rows[i]["diagnozė"]+'</td><td>'
+						+ e.rows[i]["papildoma info"]+'</td><td>'
 						+ e.rows[i]["prisegtukas"]+'</td>'
             + '</tr>';
 				}
 				h += '</table>';
-				document.getElementById("l").innerHTML = h;
+				document.getElementById("tbl").innerHTML = h;
 				//console.log(e);
+				//console.log(h);
 			}
 		, null
 		, null
 	);
-  return null;
 }
 
 

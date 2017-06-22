@@ -33,10 +33,12 @@ var go = {
 	, "extension" : ""
 	, "cut" : {
 		  "/" : "/h/index.html"
+		, "/e" : "/h/edit.html"
 		, "/clicks" : "/h/table.html"
 		, "/raindrops" : "/h/raindrops.html"
 		, "/vanin" : "/h/vanin.html"
 		, "/favicon.ico" : "favicon.ico"
+		, "/css" : "/h/st.css"
 	}
 	, "localHosts" : ['10.0.1.11','127.0.0.1','10.0.36.1','10.0.64.5','10.0.36.8']
 };
@@ -79,18 +81,12 @@ function shortLink (req,res) {
 	} 
 	if ( go.module == '/db') { //console.log(req.query.sm);
 		fs.readFile(__dirname+'/q/'+req.query.q+'.sql',function (err, sql){
-			var ks = Object.keys(req.query);
-			for (var i=0;i<ks.length;i++) {
-				if (ks[i] != 'q') {
-					var re = new RegExp("__"+ks[i]+"__","g");
-					sql = String(sql).replace(re, req.query[ks[i]]);
-				}
-			}
 			if (err) {
 				return console.log(err);
 				//return returnHtml(String(err),res);
 			}
 			var dbe = require(__dirname+'/dbe.js'); 
+      console.log(req.query.pqa);
 			dbe.simpleQuery(String(sql),req.query.pqa,function() {/*pqa for parametrized query argument*/
 				returnHtml(JSON.stringify(dbe.result,null,2),res);
 				//returnHtml(dbe.result,res);

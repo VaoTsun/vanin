@@ -1,0 +1,60 @@
+﻿<head>
+	<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf8">
+	 <link rel="stylesheet" type="text/css" href="css">
+  <title>edit</title>
+</head>
+
+<body>
+  <a href="" onclick="window.open()">back</a>
+  </div>
+	<div id="pivot">
+	</div>
+	<div id="state">
+	</div>
+</body>
+
+<script src="h/v.js">
+</script>
+<script>
+  var mod = v.gets.rel;
+  mod = mod || 'clients';
+
+  var cid = v.gets.id;
+  cid = cid || 0;
+  var url = "/db?q="+mod+"_e&pqa="+cid;
+	loadJSON(
+		url
+		, function (e) {
+				var h = '<table>';
+				for (var i=0;i<e.fields.length;i++) {
+					h += '<tr title="">' 
+            + '<td style="border-bottom: 1px grey solid; text-align:right;" onclick="saveEdit('+cid+',\''+e.fields[i].name+'\',this);">' + e.fields[i].name+'</td>' 
+						+ '<td><input style="width:300px;" value="' + e.rows[0][e.fields[i].name]+'" /></td>'
+            +'</tr>';
+				}
+				//h += '<tr><td></td><td><input type="button" style="width:100%;" value="Atlikta"/></td></tr>';
+				h += '</table>';
+				document.getElementById("pivot").innerHTML = h;
+				console.log(e);
+				//console.log(h);
+			}
+		, null
+		, null
+	);
+
+  function saveEdit(cid,att,o) {
+    var url = "/db?q=cup&pqa="+mod+"&pqa="+att+"&pqa="+o.parentElement.childNodes[1].childNodes[0].value+"&pqa="+cid; console.log(url);
+    loadJSON(
+      url
+      , function (e) {
+          document.getElementById("state").innerHTML = e.rows[0].update;
+          console.log(e);
+          //console.log(h);
+        }
+      , null
+      , null
+    );
+  }
+</script>
+
+	

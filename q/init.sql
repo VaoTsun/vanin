@@ -40,3 +40,17 @@ and name like concat('%','аня','%')
 
 create table doc.c as select * from doc.clients
 
+
+
+
+
+
+create or replace function doc.update(rel text,att text,val text,id int) returns json as 
+$$
+declare
+begin
+        execute format ('update doc.%I set %I = %L where id = %s',rel,att,val,id);
+        RETURN '{}';
+end;
+$$ language plpgsql
+;

@@ -1,0 +1,1 @@
+select * from doc.update($1,$2,$3,$4);

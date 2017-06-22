@@ -25,7 +25,7 @@ function Q(_s,_p,callback) {
 		return console.error('error fetching client from pool', err);
 	  }
 		dbe.result = {rows:[]};
-    if (typeof(_p) !== '[object Array]') {
+    if (typeof(_p) !== '[object Array]' && typeof(_p) !== 'object') {
       _p = Array(_p);
     }
     //console.log(_p);dbe.result = _p; callback();return true;
@@ -33,8 +33,12 @@ function Q(_s,_p,callback) {
 		done();
 		if(err) {
       dbe.result.rows[0] = {"ERROR":err};
+      dbe.result.sql = _s;
+      dbe.result.pars = _p;
 		  console.error('error running query as '+dbe.db.user);
-		  console.log(err);
+		  //console.log(err);
+      callback();
+      return;
 		}
     if (dbe.result.command != 'SELECT') {
       dbe.result.rows[0] = {"SQL_STMT":dbe.result.command};
