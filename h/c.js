@@ -63,11 +63,6 @@ function clients() {
             + e.rows[i].added+'"><td>' 
             + e.rows[i]["id"]+'</td><td>' 
 						+ e.rows[i]["vardas"]+'</td><td>' 
-						+ e.rows[i]["pavardė"]+'</td><td>' 
-						+ e.rows[i]["gimimo data"]+'</td><td>' 
-						+ e.rows[i]["amžius"]+'</td>'
-						+ e.rows[i]["lytis"]+'</td>'					
-						+ e.rows[i]["diagnozė"]+'</td>'
 						+ e.rows[i]["papildoma info"]+'</td>'
 						+ e.rows[i]["prisegtukas"]+'</td>'
             + '</tr>';
