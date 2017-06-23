@@ -9,6 +9,7 @@
   "dependencies": {
     "crypto": "0.0.3",
     "express": "^4.9.8",
+    "foobar": "^1.1.0",
     "iconv": "~2.1.11",
     "node-gyp": "^3.6.2",
     "pg": "^4.5.6",
@@ -16,7 +17,7 @@
     "request": "^2.72.0"
   },
   "engines": {
-    "node": "0.12.2"
+    "node": "^0.12.2"
   },
   "repository": {
     "type": "git",
