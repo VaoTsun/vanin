@@ -5,7 +5,7 @@
 </head>
 
 <body>
-  <a href="" onclick="window.open()">back</a>
+  <a href="" onclick="window.open(sessionStorage.getItem("back"))">back</a>
   </div>
 	<div id="pivot">
 	</div>
@@ -16,15 +16,30 @@
 <script src="h/v.js">
 </script>
 <script>
+window.onload = function() {
+  window.addEventListener("beforeunload", function (e) {
+    if ( typeof(sessionStorage.here) == 'undefined' ) {
+      sessionStorage.back = window.location.href;
+    }
+    sessionStorage.setItem("back",window.location.href);
+    return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+  });
+};
+  console.log(sessionStorage.getItem("back"));
+  
   var mod = v.gets.rel;
   mod = mod || 'clients';
 
-  var cid = v.gets.id;
+  var vid = v.gets.id;
+  vid = vid || 0;
+  var cid = v.gets.cid;console.log(v.gets);
   cid = cid || 0;
-  var url = "/db?q="+mod+"_e&pqa="+cid;
+  var url = "/db?q="+mod+"_e&cid="+cid+"&pqa="+vid; console.log(url);
+  
 	loadJSON(
 		url
 		, function (e) {
+        e = visitClientIdPredefined(e,cid);
 				var h = '<table>';
 				for (var i=0;i<e.fields.length;i++) {
 					h += '<tr title="">' 
@@ -42,6 +57,12 @@
 		, null
 	);
 
+  function visitClientIdPredefined(e,cid) {
+    if (v.gets.rel == 'visits') {
+      e.rows[0]["client"] = cid;
+    }
+    return e;
+  }
   function saveEdit(cid,att,o) {
     var url = "/db?q=cup&pqa="+mod+"&pqa="+att+"&pqa="+o.parentElement.childNodes[1].childNodes[0].value+"&pqa="+cid; console.log(url);
     loadJSON(

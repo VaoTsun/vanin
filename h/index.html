@@ -7,15 +7,12 @@
 
 <body>
 	<div id="p" style="opacity:0.9;background-color:#aabbcc;width:100%;height:40px;">
-		<a onclick="clients(this.parentElement.childNodes[3].value);return false;" href="">
+		<a onclick="" href="" onmouseover="u(this);">
 			žmones
 		</a>
 		&nbsp;&nbsp;
-      <input value="%" />
+      <input id="likeFilter" value="%" />
 		&nbsp;&nbsp;
-		<a onclick="visits(0);return false;" href="">
-			vizitai
-		</a>
 	</div>
 	<div>
 		<br>
@@ -27,27 +24,63 @@
 <script src="h/v.js"></script>
 <script>
 
+window.onload = function() {
+  window.addEventListener("beforeunload", function (e) {
+    if ( typeof(sessionStorage.here) == 'undefined' ) {
+      sessionStorage.back = window.location.href;
+    }
+    sessionStorage.setItem("back",window.location.href);
+  });
+};
+  console.log(sessionStorage.getItem("back"));
+  document.getElementById("likeFilter").value = v.gets.like;
+
+if (v.gets.rel == 'visits') {
+  visits(v.gets.cid);
+  } else {
+  clients();
+}
+  
+function u(o) {
+  o.href = "?like=" + encodeURIComponent(o.parentElement.childNodes[3].value);
+}
+
 function visits(k) {
-  var k = k;
-  k = k || '%';
 	loadJSON(
 		"/db?q=vsel&pqa="+k
 		, function (e) {
 				var k = Object.keys(e.rows);
+        var newItemUrl = "e?id=0&rel=visits&cid="+v.gets.cid;
 				var h = '<table>';
-        h += '<tr style="background-color: grey;"><td ><a href="e?id=0&rel=visits" style="background-color:white;font-size:10px;">+</a></td><td>vardas</td><td>pavardė</td><td>gimimo data</td><td>amžius</td><td>lytis</td><td>diagnozė</td><td>papildoma info</td><td>prisegtukas</td></tr>';
+        h += '<tr style="background-color: grey;">'
+          + '<td ><a href="'+newItemUrl+'" style="background-color:white;font-size:10px;">&#8478;</a></td>'
+          + '<td>data</td>'
+          + '<td>svoris</td>'
+          + '<td>ūgis</td>'
+          + '<td>Dienos kalorijos</td>'
+          + '<td>Fizinis Aktyvumas</td>'
+          + '<td>TSF</td>'
+          + '<td>MAC</td>'
+          + '<td>MAMC</td>'
+          + '<td>SSF</td>'
+          + '<td>humetus</td>'
+          + '<td>femur</td>'
+        + '</tr>';
 				for (var i=0;i<e.rows.length;i++) {
 					h += '<tr title="' 
-            + e.rows[i].added+'" onclick="visits('+e.rows[i]["id"]+');"><td><a href="e?id='+e.rows[i]["id"]+'&rel=visits" style="background-color:white;font-size:12px;">' 
+            + e.rows[i].dov+'" ><td><a href="e?id='+e.rows[i]["id"]+'&rel=visits" style="background-color:white;font-size:12px;">' 
             + e.rows[i]["id"]+'</a></td><td>' 
-						+ e.rows[i]["vardas"]+'</td><td>' 
-						+ e.rows[i]["pavardė"]+'</td><td>' 
-						+ e.rows[i]["gimimo data"]+'</td><td>' 
-						+ e.rows[i]["amžius"]+'</td><td>'
-						+ e.rows[i]["lytis"]+'</td><td>'					
-						+ e.rows[i]["diagnozė"]+'</td><td>'
-						+ e.rows[i]["papildoma info"]+'</td><td>'
-						+ e.rows[i]["prisegtukas"]+'</td>'
+						+ e.rows[i]["dov"]+'</td><td>' 
+						+ e.rows[i]["weight"]+'</td><td>' 
+						+ e.rows[i]["height"]+'</td><td>' 
+						+ e.rows[i]["kkal"]+'</td><td>' 
+						+ e.rows[i]["fiz_act"]+'</td><td>'
+						+ e.rows[i]["tsf"]+'</td><td>'					
+						+ e.rows[i]["mac"]+'</td><td>'
+						+ e.rows[i]["mamc"]+'</td><td>'
+						+ e.rows[i]["ssf"]+'</td><td>'
+						+ e.rows[i]["humetus"]+'</td><td>'
+						+ e.rows[i]["femur"]+'</td>'
             + '</tr>';
 				}
 				h += '</table>';
