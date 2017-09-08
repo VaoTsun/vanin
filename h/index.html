@@ -13,6 +13,7 @@
 		&nbsp;&nbsp;
       <input id="likeFilter" value="%" />
 		&nbsp;&nbsp;
+    <font id="tTle" style="color:brown;"></font>
 	</div>
 	<div>
 		<br>
@@ -49,7 +50,7 @@ function visits(k) {
 	loadJSON(
 		"/db?q=vsel&pqa=" + k
 		, function (e) {
-				var k = Object.keys(e.rows);
+				var ak = Object.keys(e.rows);
         var newItemUrl = "e?vid=0&rel=visits&cid="+v.gets.cid;
 				var h = '<table>';
         h += '<tr style="background-color: grey;">'
@@ -69,7 +70,7 @@ function visits(k) {
         + '</tr>';
 				for (var i=0;i<e.rows.length;i++) {
 					h += '<tr title="' 
-            + e.rows[i].dov+'" ><td><a href="e?id='+e.rows[i]["id"]+'&rel=visits" style="background-color:white;font-size:12px;">' 
+            + e.rows[i].dov+'" ><td><a href="e?id='+e.rows[i]["id"]+'&rel=visits&cid='+k+'" style="background-color:white;font-size:12px;">' 
             + e.rows[i]["id"]+'</a></td><td>' 
 						+ e.rows[i]["dov"]+'</td><td>' 
 						+ e.rows[i]["weight"]+'</td><td>' 
@@ -87,6 +88,7 @@ function visits(k) {
 				}
 				h += '</table>';
 				document.getElementById("tbl").innerHTML = h;
+        document.getElementById("tTle").innerHTML = '' + e.rows[0]["vardas"] + ' ' + e.rows[0]["pavarde"] + ' ' + e.rows[0]["lytis"] + ' ' + e.rows[0]["dob"] + ' ' + e.rows[0]["diagnoze"];
 				console.log(e);
 			}
 		, null

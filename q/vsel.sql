@@ -9,6 +9,7 @@ select visits.*, mac-(3.1416 * TSF) mamc
   when tsf >= tsp.p95 then 'p95: >'||tsp.p95
   ELSE 'No match'
   END "tsfp"
+, vardas,pavarde,clients.lytis, diagnoze, dob::text
 from doc.visits 
 join doc.clients on client = clients.id
 LEFT OUTER JOIN doc.tsp on tsp.lytis = clients.lytis and date_part('year',justify_interval(now() - dob)) >= tsp.nuo and date_part('year',justify_interval(now() - dob)) < tsp.iki

@@ -7,6 +7,7 @@
 <body>
   <a href="" onclick="window.open(sessionStorage.getItem("back"))" style="color:#337788">back</a>
   <a href="" onclick="location.replace((window.location.origin));return false;" style="color:#337788">main</a>
+  <a href="" style="color:#337788" id="lnUp"></a>
   </div>
 	<div id="pivot">
 	</div>
@@ -40,7 +41,7 @@ window.onload = function() {
   var qM = document.createElement('DIV');
   qM.innerHTML = '?';
   qM.onmouseover = function() {
-    this.innerHTML='To edit values, just click on the value field, change the value and click on field name. <br>To delete the whole row, click here:';
+    this.innerHTML='To edit values, just click on the value field, change the value and click on field name. Or use TAB key to just switch to the next field <br>To delete the whole row, click here:';
     this.appendChild(dButtEl);
   }
   
@@ -59,6 +60,8 @@ window.onload = function() {
     id = cid;
     } else {
     id = vid;
+    document.getElementById('lnUp').text='Up';
+    document.getElementById('lnUp').href='/?rel=visits&cid='+v.gets.cid+'&like='+v.gets.like+'';
   }
   var url = "/db?q="+mod+"_e&cid="+cid+"&vid="+vid+"&pqa="+id; console.log(url);
   
@@ -70,8 +73,8 @@ window.onload = function() {
 				var h = descr+'<table>';
 				for (var i=0;i<e.fields.length;i++) {
 					h += '<tr title="">' 
-            + '<td style="border-bottom: 1px grey solid; text-align:right;" onclick="saveEdit('+id+',\''+e.fields[i].name+'\',this);">' + e.fields[i].name+'</td>' 
-						+ '<td><input style="width:300px;" value="' + e.rows[0][e.fields[i].name]+'" type="text" /></td>'
+            + '<td style="border-bottom: 1px grey solid; text-align:right;"><div onclick="saveEdit('+id+',\''+e.fields[i].name+'\',this);">' + e.fields[i].name+'</div></td>' 
+						+ '<td><input style="width:300px;" value="' + e.rows[0][e.fields[i].name]+'" type="text" onblur="saveEdit('+id+',\''+e.fields[i].name+'\',this);" /></td>'
             +'</tr>';
 				}
 				//h += '<tr><td></td><td><input type="button" style="width:100%;" value="Atlikta"/></td></tr>';
@@ -97,7 +100,7 @@ window.onload = function() {
   }
   
   function saveEdit(cid,att,o) {
-    var url = "/db?q=cup&pqa="+mod+"&pqa="+att+"&pqa="+o.parentElement.childNodes[1].childNodes[0].value+"&pqa="+cid; console.log(url);
+    var url = "/db?q=cup&pqa="+mod+"&pqa="+att+"&pqa="+o.parentElement.parentElement.childNodes[1].childNodes[0].value+"&pqa="+cid; console.log(url);
     console.log(url);
     loadJSON(
       url
