@@ -1,0 +1,1 @@
+select * from doc.delete($1,$2);

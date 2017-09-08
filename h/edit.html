@@ -5,7 +5,8 @@
 </head>
 
 <body>
-  <a href="" onclick="window.open(sessionStorage.getItem("back"))">back</a>
+  <a href="" onclick="window.open(sessionStorage.getItem("back"))" style="color:#337788">back</a>
+  <a href="" onclick="location.replace((window.location.origin));return false;" style="color:#337788">main</a>
   </div>
 	<div id="pivot">
 	</div>
@@ -25,6 +26,24 @@ window.onload = function() {
     return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
   });
 };
+
+  var dButtEl = document.createElement('INPUT');
+  dButtEl.type='BUTTON';
+  dButtEl.value='delete';
+  dButtEl.style.color='red';
+  dButtEl.onclick = function() {
+    console.log('clicked');
+    deleteId(id);
+    window.history.go(-1);
+  }
+  
+  var qM = document.createElement('DIV');
+  qM.innerHTML = '?';
+  qM.onmouseover = function() {
+    this.innerHTML='To edit values, just click on the value field, change the value and click on field name. <br>To delete the whole row, click here:';
+    this.appendChild(dButtEl);
+  }
+  
   console.log(sessionStorage.getItem("back"));
   
   var mod = v.gets.rel;
@@ -34,41 +53,56 @@ window.onload = function() {
   vid = vid || 0;
   var cid = v.gets.cid;console.log(v.gets);
   cid = cid || 0;
-  var url = "/db?q="+mod+"_e&cid="+cid+"&pqa="+vid; console.log(url);
+  
+  var id = 0;
+  if (mod == 'clients') {
+    id = cid;
+    } else {
+    id = vid;
+  }
+  var url = "/db?q="+mod+"_e&cid="+cid+"&vid="+vid+"&pqa="+id; console.log(url);
   
 	loadJSON(
 		url
 		, function (e) {
         e = visitClientIdPredefined(e,cid);
-				var h = '<table>';
+        var descr = '<div id="upd"></div>';
+				var h = descr+'<table>';
 				for (var i=0;i<e.fields.length;i++) {
 					h += '<tr title="">' 
-            + '<td style="border-bottom: 1px grey solid; text-align:right;" onclick="saveEdit('+cid+',\''+e.fields[i].name+'\',this);">' + e.fields[i].name+'</td>' 
-						+ '<td><input style="width:300px;" value="' + e.rows[0][e.fields[i].name]+'" /></td>'
+            + '<td style="border-bottom: 1px grey solid; text-align:right;" onclick="saveEdit('+id+',\''+e.fields[i].name+'\',this);">' + e.fields[i].name+'</td>' 
+						+ '<td><input style="width:300px;" value="' + e.rows[0][e.fields[i].name]+'" type="text" /></td>'
             +'</tr>';
 				}
 				//h += '<tr><td></td><td><input type="button" style="width:100%;" value="Atlikta"/></td></tr>';
 				h += '</table>';
-				document.getElementById("pivot").innerHTML = h;
+				//h += '<input type="submit" value="save" />';
+				document.getElementById("pivot").innerHTML = h;//document.getElementById("pivot").appendChild(dButtEl);
 				console.log(e);
 				//console.log(h);
+        document.getElementById("upd").appendChild(qM);
 			}
 		, null
 		, null
 	);
-
+  
+  
+  
+        
   function visitClientIdPredefined(e,cid) {
-    if (v.gets.rel == 'visits') {
+    if (v.gets.rel == 'visits' ) {
       e.rows[0]["client"] = cid;
     }
     return e;
   }
+  
   function saveEdit(cid,att,o) {
     var url = "/db?q=cup&pqa="+mod+"&pqa="+att+"&pqa="+o.parentElement.childNodes[1].childNodes[0].value+"&pqa="+cid; console.log(url);
+    console.log(url);
     loadJSON(
       url
       , function (e) {
-          document.getElementById("state").innerHTML = e.rows[0].update;
+          document.getElementById("state").innerHTML = JSON.stringify(e.rows[0]);
           console.log(e);
           //console.log(h);
         }
@@ -76,6 +110,21 @@ window.onload = function() {
       , null
     );
   }
-</script>
+
+  function deleteId(id,o) {
+    var url = "/db?q=del&pqa="+mod+"&pqa="+id; console.log(url);
+    loadJSON(
+      url
+      , function (e) {
+          document.getElementById("state").innerHTML = JSON.stringify(e.rows[0]);
+          console.log(e);
+          //console.log(h);
+        }
+      , null
+      , null
+    );
+  }
+
+ </script>
 
 	

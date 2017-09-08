@@ -42,12 +42,12 @@ if (v.gets.rel == 'visits') {
 }
   
 function u(o) {
-  o.href = "?like=" + encodeURIComponent(o.parentElement.childNodes[3].value);
+  o.href = "?like=" + encodeURIComponent(o.parentElement.childNodes[3].value.replace('undefined',''));
 }
 
 function visits(k) {
 	loadJSON(
-		"/db?q=vsel&pqa="+k
+		"/db?q=vsel&pqa=" + k
 		, function (e) {
 				var k = Object.keys(e.rows);
         var newItemUrl = "e?id=0&rel=visits&cid="+v.gets.cid;
@@ -88,7 +88,6 @@ function visits(k) {
 				h += '</table>';
 				document.getElementById("tbl").innerHTML = h;
 				console.log(e);
-				//console.log(h);
 			}
 		, null
 		, null

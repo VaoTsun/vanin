@@ -60,11 +60,11 @@ function clients() {
 		, function (e) {
 				var k = Object.keys(e.rows);
 				var h = '<table>';
-        h += '<tr style="background-color: grey;"><td ><a href="e?id=0&rel=clients" style="background-color:white;font-size:14px;">&#8478;</a></td><td>vardas</td><td>pavardė</td><td>vizitai</td>'
+        h += '<tr style="background-color: grey;"><td ><a href="e?cid=0&rel=clients" style="background-color:white;font-size:14px;">&#8478;</a></td><td>vardas</td><td>pavardė</td><td>vizitai</td>'
           + '<td>gimimo data</td><td>amžius</td><td>lytis</td><td>diagnozė</td><td>papildoma info</td><td><img src="skrepka.jpg" style="width:20px;"></td></tr>';
 				for (var i=0;i<e.rows.length;i++) {
 					h += '<tr title="' 
-            + e.rows[i].added+'"><td><a href="e?id='+e.rows[i]["id"]+'&rel=clients" style="background-color:white;font-size:12px;">' 
+            + e.rows[i].added+'"><td><a href="e?cid='+e.rows[i]["id"]+'&rel=clients" style="background-color:white;font-size:12px;">' 
             + e.rows[i]["id"]+'</a></td><td>' 
 						+ e.rows[i]["vardas"]+'</td><td>' 
 						+ e.rows[i]["pavardė"]+'</td>' 
@@ -80,7 +80,7 @@ function clients() {
 				}
 				h += '</table>';
 				document.getElementById("tbl").innerHTML = h;
-				//console.log(e);
+				console.log(e);
 				//console.log(h);
 			}
 		, null

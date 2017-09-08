@@ -11,7 +11,7 @@ select visits.*, mac-(3.1416 * TSF) mamc
   END "tsfp"
 from doc.visits 
 join doc.clients on client = clients.id
-join doc.tsp on tsp.lytis = clients.lytis and date_part('year',justify_interval(now() - dob)) >= tsp.nuo and date_part('year',justify_interval(now() - dob)) < tsp.iki
+LEFT OUTER JOIN doc.tsp on tsp.lytis = clients.lytis and date_part('year',justify_interval(now() - dob)) >= tsp.nuo and date_part('year',justify_interval(now() - dob)) < tsp.iki
 where client = $1
 and visits.id > 0
 order by visits.id

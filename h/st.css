@@ -1,4 +1,4 @@
-			body {background-color:black;color:ada;}
+			body {background-color:#112233;color:ada;}
 			tr.nth-child(odd) {color:#b3f;} 
 			tr:nth-child(even) {color: #ae2;} 
 			td.nth-child(odd)  {border-bottom: 1px #4aa solid;}  
@@ -20,3 +20,5 @@
 				font-size:12px;
 			}
 			a {color:black;font-size:30px;}
+input[type=text] {background-color:black;color:white;border: 0;}
+input[type=text]:hover {background-color:grey;color:white;border: 1;}
